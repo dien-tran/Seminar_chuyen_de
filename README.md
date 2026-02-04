@@ -2,3 +2,4 @@
 
 ## Tuần 1: Vibe Coding 
 ## Tuần 2: N8N Workflow
+## Tuần 3: Tổng quan kiến trúc phần mềm
