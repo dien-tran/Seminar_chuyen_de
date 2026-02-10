@@ -12,27 +12,96 @@ export type PostModalProps = {
 const PostModal: React.FC<PostModalProps> = ({ isOpen, username, content, onChangeContent, onSubmit, onCancel }) => {
   if (!isOpen) return null;
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
-      <div className="bg-white rounded-[20px] p-10 w-[851px] flex flex-col gap-6 shadow-lg">
-        <div className="text-[24px] font-normal text-[#606060] leading-[26px] mb-2">How do you feel today?</div>
-        <textarea
-          className="w-full px-6 py-6 rounded-lg bg-[#D9D9D9] text-[24px] text-gray-700 placeholder-gray-500 focus:outline-none resize-none"
-          value={content}
-          onChange={e => onChangeContent(e.target.value)}
-          placeholder="What's on your mind?"
-          aria-label="Post content"
-          rows={6}
-        />
-        <div className="flex gap-6 justify-center mt-4">
+    <div className="fixed inset-0 z-[999] flex items-center justify-center bg-black/40" style={{
+      pointerEvents: 'none'
+    }}>
+      {/* Modal Container - WHITE background with BLACK border */}
+      <div style={{
+        pointerEvents: 'auto',
+        position: 'fixed',
+        left: '350px',
+        top: '50%',
+        transform: 'translateY(-50%)',
+        backgroundColor: '#FFFFFF',
+        borderRadius: '20px',
+        padding: '32px',
+        width: '500px',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '24px',
+        boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+        border: '4px solid #000000'
+      }}>
+        {/* Title Section */}
+        <div style={{
+          fontSize: '20px',
+          fontWeight: 'normal',
+          color: '#4B5563'
+        }}>
+          How do you feel today?
+        </div>
+
+        {/* Textarea Container - GRAY background with visible spacing */}
+        <div style={{
+          borderRadius: '15px',
+          border: '3px solid #9CA3AF',
+          backgroundColor: '#D3D3D3',
+          padding: '20px'
+        }}>
+          <textarea
+            style={{
+              width: '100%',
+              padding: '16px',
+              borderRadius: '8px',
+              backgroundColor: '#E5E5E5',
+              fontSize: '18px',
+              color: '#4B5563',
+              border: '2px solid #6B7280',
+              resize: 'none',
+              outline: 'none'
+            }}
+            value={content}
+            onChange={e => onChangeContent(e.target.value)}
+            placeholder="What's on your mind?"
+            aria-label="Post content"
+            rows={4}
+          />
+        </div>
+
+        {/* Buttons Section */}
+        <div style={{
+          display: 'flex',
+          gap: '12px',
+          justifyContent: 'center'
+        }}>
           <button
-            className="bg-[#00B7FF] text-white text-[20px] font-normal rounded-lg py-2 px-20 hover:opacity-90 focus:outline-none disabled:opacity-50"
+            style={{
+              backgroundColor: '#00B7FF',
+              color: 'white',
+              fontSize: '16px',
+              fontWeight: '600',
+              borderRadius: '8px',
+              padding: '10px 40px',
+              border: 'none',
+              cursor: content.trim() ? 'pointer' : 'not-allowed',
+              opacity: content.trim() ? 1 : 0.5
+            }}
             onClick={onSubmit}
             disabled={!content.trim()}
           >
             Submit
           </button>
           <button
-            className="bg-[#CCF1FF] text-black text-[20px] font-normal rounded-lg py-2 px-20 hover:opacity-90 focus:outline-none"
+            style={{
+              backgroundColor: '#B8E5FF',
+              color: '#374151',
+              fontSize: '16px',
+              fontWeight: '600',
+              borderRadius: '8px',
+              padding: '10px 40px',
+              border: 'none',
+              cursor: 'pointer'
+            }}
             onClick={onCancel}
           >
             Cancel

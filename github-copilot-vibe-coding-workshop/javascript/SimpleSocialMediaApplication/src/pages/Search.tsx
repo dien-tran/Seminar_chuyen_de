@@ -12,10 +12,10 @@ export type SearchProps = {
 const Search: React.FC<SearchProps> = ({ posts, onSelectPost, onSearch, query }) => (
   <div className="relative bg-[#E5A000] rounded-[20px]" style={{ width: '760px', height: '832px' }}>
     {/* Search Input Group - Group 16 */}
-    <div 
+    <div
       className="absolute"
-      style={{ 
-        left: '25px', 
+      style={{
+        left: '25px',
         top: '59px',
         width: '614px',
         height: '67px'
@@ -31,40 +31,40 @@ const Search: React.FC<SearchProps> = ({ posts, onSelectPost, onSearch, query })
         style={{ lineHeight: '26px' }}
       />
     </div>
-    
+
     {/* Search Button - Group 17 */}
-    <div 
+    <div
       className="absolute bg-[#00B7FF] rounded-[10px] flex items-center justify-center cursor-pointer hover:opacity-90"
-      style={{ 
-        left: '923px', 
+      style={{
+        left: '923px',
         top: '59px',
         width: '61px',
         height: '56px'
       }}
     >
-      <img 
-        src={searchIcon} 
-        alt="Search" 
+      <img
+        src={searchIcon}
+        alt="Search"
         style={{ width: '35px', height: '35px' }}
       />
     </div>
-    
+
     {/* White separator line - Line 1 */}
-    <div 
+    <div
       className="absolute bg-white"
-      style={{ 
-        left: '1px', 
+      style={{
+        left: '1px',
         top: '156px',
         width: '760px',
         height: '3px'
       }}
     ></div>
-    
+
     {/* Posts List */}
-    <div 
+    <div
       className="absolute"
-      style={{ 
-        left: '0px', 
+      style={{
+        left: '0px',
         top: '156px'
       }}
     >
