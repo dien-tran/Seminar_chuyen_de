@@ -1,10 +1,17 @@
 using Contoso.BlazorApp.Components;
+using Contoso.BlazorApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+// Add HttpClient for API calls
+builder.Services.AddHttpClient();
+
+// Register API service
+builder.Services.AddScoped<SocialMediaApiService>();
 
 var app = builder.Build();
 

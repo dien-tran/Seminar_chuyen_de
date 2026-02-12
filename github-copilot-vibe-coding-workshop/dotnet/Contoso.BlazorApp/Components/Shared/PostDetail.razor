@@ -1,0 +1,117 @@
+@using Contoso.BlazorApp.Models
+
+<div class="w-[760px] bg-[#E5A000] min-h-screen rounded-[20px] relative">
+    <!-- Post Detail -->
+    <div class="p-6 border-b-2 border-white" style="min-height: 334px;">
+        <div class="flex items-start gap-6">
+            <div class="w-[100px] h-[100px] rounded-full bg-[#D9D9D9] flex-shrink-0"></div>
+            <div class="flex-1">
+                <div class="text-[32px] font-normal text-white leading-[26px] mb-4">@Post.Username</div>
+                <div class="text-[32px] font-normal text-white leading-[26px] py-5">@Post.Content</div>
+                <div class="flex gap-6 items-center mt-6">
+                    <button @onclick="OnLikeClick" 
+                            class="focus:outline-none hover:opacity-80">
+                        <img src="/icons/heart.svg" alt="Like" class="w-[58px] h-[43px]" />
+                    </button>
+                    <div class="flex items-center gap-2">
+                        <img src="/icons/comment.svg" alt="Comment" class="w-[55px] h-[48px]" />
+                        @if (Post.Likes > 0)
+                        {
+                            <span class="text-white text-[20px] font-bold">@Post.Likes</span>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Comments List -->
+    <div>
+        @for (int i = 0; i < Comments.Count; i++)
+        {
+            var comment = Comments[i];
+            var index = i;
+            
+            <div>
+                <div class="p-6" style="min-height: 129px;">
+                    <div class="flex items-start gap-4">
+                        <div class="w-[60px] h-[60px] rounded-full bg-[#D9D9D9] flex-shrink-0"></div>
+                        <div class="flex-1">
+                            <div class="text-[24px] font-normal text-white leading-[20px] mb-2">@comment.Username</div>
+                            <div class="text-[24px] font-normal text-white leading-[20px]">@comment.Content</div>
+                        </div>
+                    </div>
+                </div>
+                @if (index < Comments.Count - 1)
+                {
+                    <div class="h-[2px] bg-white"></div>
+                }
+            </div>
+        }
+        
+        @if (!Comments.Any())
+        {
+            <div class="p-6 text-center">
+                <div class="text-white text-[20px] opacity-70">
+                    No comments yet. Be the first to comment!
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- Add Comment Section -->
+    <div class="fixed bottom-6 left-[130px] right-[130px] flex items-center justify-center gap-4 px-6">
+        <input @bind="commentContent" 
+               @bind:event="oninput"
+               @onkeypress="OnCommentKeyPress"
+               class="flex-1 max-w-[642px] px-4 py-3 rounded-lg text-[20px] text-gray-700 placeholder-gray-400 focus:outline-none"
+               type="text"
+               placeholder="Add a comment..."
+               aria-label="Add comment" />
+        <button @onclick="OnAddCommentClick"
+                disabled="@string.IsNullOrWhiteSpace(commentContent)"
+                class="@GetAddButtonClasses()">
+            <img src="/icons/plus.svg" alt="Add comment" class="w-[41px] h-[41px]" />
+        </button>
+    </div>
+</div>
+
+@code {
+    [Parameter] public Post Post { get; set; } = new();
+    [Parameter] public List<Comment> Comments { get; set; } = new();
+    [Parameter] public EventCallback OnLike { get; set; }
+    [Parameter] public EventCallback<string> OnAddComment { get; set; }
+    [Parameter] public EventCallback OnBack { get; set; }
+
+    private string commentContent = string.Empty;
+
+    private async Task OnLikeClick()
+    {
+        await OnLike.InvokeAsync();
+    }
+
+    private async Task OnAddCommentClick()
+    {
+        if (!string.IsNullOrWhiteSpace(commentContent))
+        {
+            await OnAddComment.InvokeAsync(commentContent);
+            commentContent = string.Empty;
+        }
+    }
+
+    private async Task OnCommentKeyPress(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter" && !string.IsNullOrWhiteSpace(commentContent))
+        {
+            await OnAddCommentClick();
+        }
+    }
+
+    private string GetAddButtonClasses()
+    {
+        var baseClasses = "w-[61px] h-[56px] rounded-lg flex items-center justify-center focus:outline-none";
+        return string.IsNullOrWhiteSpace(commentContent) 
+            ? $"{baseClasses} bg-gray-400 opacity-50 cursor-not-allowed"
+            : $"{baseClasses} bg-[#00B7FF] hover:opacity-90";
+    }
+}

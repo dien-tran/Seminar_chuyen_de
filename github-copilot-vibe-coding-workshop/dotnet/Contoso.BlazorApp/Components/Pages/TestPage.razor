@@ -1,0 +1,19 @@
+@page "/test"
+@rendermode InteractiveServer
+
+<div>
+    <h1>Test Page</h1>
+    <p>This is a simple test page to verify Blazor is working.</p>
+    <p>Current time: @DateTime.Now.ToString("HH:mm:ss")</p>
+    <button @onclick="UpdateTime">Update Time</button>
+    <p>Button clicked: @clickCount times</p>
+</div>
+
+@code {
+    private int clickCount = 0;
+
+    private void UpdateTime()
+    {
+        clickCount++;
+    }
+}

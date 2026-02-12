@@ -1,0 +1,76 @@
+@using Contoso.BlazorApp.Models
+
+<div class="flex flex-col w-[760px]">
+    @for (int i = 0; i < Posts.Count; i++)
+    {
+        var post = Posts[i];
+        var index = i; // Capture for closure
+        
+        <div>
+            <div class="relative bg-[#E5A000] cursor-pointer hover:opacity-90 transition-opacity"
+                 style="width: 760px; height: 263px;"
+                 tabindex="0"
+                 aria-label="View post by @post.Username"
+                 @onclick="@(() => OnPostSelect.InvokeAsync(post.Id))"
+                 @onkeypress="@((e) => HandleKeyPress(e, post.Id))">
+
+                <!-- Avatar -->
+                <div class="absolute rounded-full bg-[#D9D9D9]"
+                     style="left: 27px; top: 25px; width: 100px; height: 100px;"></div>
+
+                <!-- Username -->
+                <div class="absolute text-[32px] font-normal text-white text-center"
+                     style="left: 152px; top: 61px; width: 160px; height: 27px; line-height: 27px;">
+                    @post.Username
+                </div>
+
+                <!-- Post Content Frame -->
+                <div class="absolute flex items-center"
+                     style="left: 27px; top: 122px; width: 700px; height: 89px; padding: 20px 0;">
+                    <div class="text-[32px] font-normal text-white leading-[27px]">
+                        @post.Content
+                    </div>
+                </div>
+
+                <!-- Heart Icon with Likes Count -->
+                <div class="absolute flex items-center gap-2"
+                     style="left: 27px; top: 207.09px;">
+                    <img src="/icons/heart.svg" alt="Like" style="width: 58px; height: 43.06px;" />
+                    @if (post.Likes > 0)
+                    {
+                        <span class="text-white text-[20px] font-bold">@post.Likes</span>
+                    }
+                </div>
+
+                <!-- Comment Icon with Comments Count -->
+                <div class="absolute flex items-center gap-2"
+                     style="left: 111px; top: 207.09px;">
+                    <img src="/icons/comment.svg" alt="Comment" style="width: 55px; height: 47.9px;" />
+                    @if (post.Comments > 0)
+                    {
+                        <span class="text-white text-[20px] font-bold">@post.Comments</span>
+                    }
+                </div>
+            </div>
+
+            <!-- White separator line -->
+            @if (index < Posts.Count - 1)
+            {
+                <div style="width: 760px; height: 2px; background-color: #FFFFFF;"></div>
+            }
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public List<Post> Posts { get; set; } = new();
+    [Parameter] public EventCallback<string> OnPostSelect { get; set; }
+
+    private async Task HandleKeyPress(KeyboardEventArgs e, string postId)
+    {
+        if (e.Key == "Enter")
+        {
+            await OnPostSelect.InvokeAsync(postId);
+        }
+    }
+}

@@ -1,0 +1,16 @@
+@using Contoso.BlazorApp.Models
+@using Contoso.BlazorApp.Components.Shared
+
+<PostDetail Post="Post" 
+            Comments="Comments" 
+            OnLike="OnLike" 
+            OnAddComment="OnAddComment" 
+            OnBack="OnBack" />
+
+@code {
+    [Parameter] public Post Post { get; set; } = new();
+    [Parameter] public List<Comment> Comments { get; set; } = new();
+    [Parameter] public EventCallback OnLike { get; set; }
+    [Parameter] public EventCallback<string> OnAddComment { get; set; }
+    [Parameter] public EventCallback OnBack { get; set; }
+}

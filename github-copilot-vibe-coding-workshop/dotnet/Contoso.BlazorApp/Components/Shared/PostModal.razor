@@ -1,0 +1,82 @@
+@if (IsOpen)
+{
+    <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
+        <div class="bg-white rounded-[20px] p-10 w-[600px] flex flex-col gap-6 shadow-lg">
+            <div class="text-[36px] font-normal text-black leading-[26px] text-center">Create New Post</div>
+            
+            <div class="text-[20px] text-gray-600 text-center">
+                Posting as: <strong>@Username</strong>
+            </div>
+            
+            <div class="relative">
+                <textarea @bind="@currentContent" 
+                         @bind:event="oninput"
+                         @onkeypress="@OnKeyPress"
+                         class="w-full px-4 py-4 rounded-lg bg-[#D9D9D9] text-[18px] text-black placeholder-[#878787] focus:outline-none resize-none" 
+                         rows="6" 
+                         placeholder="What's on your mind?" 
+                         aria-label="Post content" 
+                         maxlength="500"></textarea>
+                <div class="text-right text-sm text-gray-500 mt-1">@(currentContent?.Length ?? 0)/500</div>
+            </div>
+            
+            <div class="flex justify-center gap-4">
+                <button class="bg-gray-400 text-white text-[20px] font-normal rounded-lg py-2 px-8 hover:opacity-90 focus:outline-none"
+                        @onclick="OnCancelClick">
+                    Cancel
+                </button>
+                <button class="@GetSubmitButtonClasses()" 
+                        disabled="@string.IsNullOrWhiteSpace(currentContent)"
+                        @onclick="OnSubmitClick">
+                    Post
+                </button>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public bool IsOpen { get; set; }
+    [Parameter] public string Username { get; set; } = string.Empty;
+    [Parameter] public string Content { get; set; } = string.Empty;
+    [Parameter] public EventCallback<string> OnContentChange { get; set; }
+    [Parameter] public EventCallback OnSubmit { get; set; }
+    [Parameter] public EventCallback OnCancel { get; set; }
+
+    private string currentContent = string.Empty;
+
+    protected override void OnParametersSet()
+    {
+        currentContent = Content;
+    }
+
+    private async Task OnKeyPress(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter" && e.CtrlKey && !string.IsNullOrWhiteSpace(currentContent))
+        {
+            await OnSubmitClick();
+        }
+    }
+
+    private async Task OnSubmitClick()
+    {
+        if (!string.IsNullOrWhiteSpace(currentContent))
+        {
+            await OnContentChange.InvokeAsync(currentContent);
+            await OnSubmit.InvokeAsync();
+        }
+    }
+
+    private async Task OnCancelClick()
+    {
+        await OnCancel.InvokeAsync();
+    }
+
+    private string GetSubmitButtonClasses()
+    {
+        var baseClasses = "text-white text-[20px] font-normal rounded-lg py-2 px-8 focus:outline-none";
+        return string.IsNullOrWhiteSpace(currentContent) 
+            ? $"{baseClasses} bg-gray-400 opacity-50 cursor-not-allowed"
+            : $"{baseClasses} bg-[#00B7FF] hover:opacity-90";
+    }
+}

@@ -1,0 +1,64 @@
+@using Contoso.BlazorApp.Models
+@using Contoso.BlazorApp.Components.Shared
+
+<div class="relative bg-[#E5A000] rounded-[20px]" style="width: 760px; height: 832px;">
+    <!-- Search Input Group -->
+    <div class="absolute" style="left: 25px; top: 59px; width: 614px; height: 67px;">
+        <input @bind="currentQuery" 
+               @bind:event="oninput"
+               class="w-full h-[56px] px-4 rounded-[10px] bg-[#D9D9D9] text-[24px] text-[#878787] placeholder-[#878787] focus:outline-none"
+               type="text"
+               placeholder="Enter keywords to search..."
+               aria-label="Search posts"
+               style="line-height: 26px;" />
+    </div>
+
+    <!-- Search Button -->
+    <div class="absolute bg-[#00B7FF] rounded-[10px] flex items-center justify-center cursor-pointer hover:opacity-90"
+         style="left: 659px; top: 59px; width: 61px; height: 56px;">
+        <img src="/icons/search.svg" alt="Search" style="width: 35px; height: 35px;" />
+    </div>
+
+    <!-- White separator line -->
+    <div class="absolute bg-white" style="left: 1px; top: 156px; width: 760px; height: 3px;"></div>
+
+    <!-- Posts List -->
+    <div class="absolute" style="left: 0px; top: 156px;">
+        @if (!Posts.Any())
+        {
+            <div class="flex items-center justify-center text-white text-2xl px-6" style="width: 760px; height: 400px;">
+                @(string.IsNullOrWhiteSpace(currentQuery) ? "Enter a search term" : "No posts found")
+            </div>
+        }
+        else
+        {
+            <PostList Posts="Posts" OnPostSelect="OnSelectPost" />
+        }
+    </div>
+</div>
+
+@code {
+    [Parameter] public List<Post> Posts { get; set; } = new();
+    [Parameter] public EventCallback<string> OnSelectPost { get; set; }
+    [Parameter] public EventCallback<string> OnSearch { get; set; }
+    [Parameter] public string Query { get; set; } = string.Empty;
+
+    private string _currentQuery = string.Empty;
+    private string currentQuery 
+    { 
+        get => _currentQuery; 
+        set 
+        { 
+            if (_currentQuery != value)
+            {
+                _currentQuery = value;
+                InvokeAsync(() => OnSearch.InvokeAsync(value));
+            }
+        } 
+    }
+
+    protected override void OnParametersSet()
+    {
+        _currentQuery = Query;
+    }
+}
