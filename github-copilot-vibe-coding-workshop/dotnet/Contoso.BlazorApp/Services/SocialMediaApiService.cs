@@ -2,17 +2,19 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using Contoso.BlazorApp.Models;
+using Microsoft.Extensions.Configuration;
 
 namespace Contoso.BlazorApp.Services;
 
 public class SocialMediaApiService
 {
     private readonly HttpClient _httpClient;
-    private const string ApiBase = "http://localhost:8080/api";
+    private readonly string _apiBase;
 
-    public SocialMediaApiService(HttpClient httpClient)
+    public SocialMediaApiService(HttpClient httpClient, IConfiguration configuration)
     {
         _httpClient = httpClient;
+        _apiBase = configuration["ApiSettings:BaseUrl"] ?? "http://localhost:8080/api";
         // Set a reasonable timeout for API calls
         _httpClient.Timeout = TimeSpan.FromSeconds(10);
     }
@@ -22,7 +24,7 @@ public class SocialMediaApiService
         try
         {
             using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-            var posts = await _httpClient.GetFromJsonAsync<List<Post>>($"{ApiBase}/posts", cts.Token);
+            var posts = await _httpClient.GetFromJsonAsync<List<Post>>($"{_apiBase}/posts", cts.Token);
             return posts ?? new List<Post>();
         }
         catch
@@ -35,7 +37,7 @@ public class SocialMediaApiService
     {
         try
         {
-            return await _httpClient.GetFromJsonAsync<Post>($"{ApiBase}/posts/{postId}");
+            return await _httpClient.GetFromJsonAsync<Post>($"{_apiBase}/posts/{postId}");
         }
         catch
         {
@@ -47,7 +49,7 @@ public class SocialMediaApiService
     {
         try
         {
-            var response = await _httpClient.PostAsJsonAsync($"{ApiBase}/posts", request);
+            var response = await _httpClient.PostAsJsonAsync($"{_apiBase}/posts", request);
             if (!response.IsSuccessStatusCode)
                 throw new HttpRequestException("API unavailable");
             
@@ -63,7 +65,7 @@ public class SocialMediaApiService
     {
         try
         {
-            var response = await _httpClient.PatchAsJsonAsync($"{ApiBase}/posts/{postId}", request);
+            var response = await _httpClient.PatchAsJsonAsync($"{_apiBase}/posts/{postId}", request);
             if (!response.IsSuccessStatusCode)
                 throw new HttpRequestException("API unavailable");
             
@@ -79,7 +81,7 @@ public class SocialMediaApiService
     {
         try
         {
-            var response = await _httpClient.DeleteAsync($"{ApiBase}/posts/{postId}");
+            var response = await _httpClient.DeleteAsync($"{_apiBase}/posts/{postId}");
             if (!response.IsSuccessStatusCode && response.StatusCode != System.Net.HttpStatusCode.NotFound)
                 throw new HttpRequestException("API unavailable");
         }
@@ -93,7 +95,7 @@ public class SocialMediaApiService
     {
         try
         {
-            var comments = await _httpClient.GetFromJsonAsync<List<Comment>>($"{ApiBase}/posts/{postId}/comments");
+            var comments = await _httpClient.GetFromJsonAsync<List<Comment>>($"{_apiBase}/posts/{postId}/comments");
             return comments ?? new List<Comment>();
         }
         catch
@@ -106,7 +108,7 @@ public class SocialMediaApiService
     {
         try
         {
-            var response = await _httpClient.PostAsJsonAsync($"{ApiBase}/posts/{postId}/comments", request);
+            var response = await _httpClient.PostAsJsonAsync($"{_apiBase}/posts/{postId}/comments", request);
             if (!response.IsSuccessStatusCode)
                 throw new HttpRequestException("API unavailable");
             
@@ -122,7 +124,7 @@ public class SocialMediaApiService
     {
         try
         {
-            var response = await _httpClient.PostAsJsonAsync($"{ApiBase}/posts/{postId}/likes", request);
+            var response = await _httpClient.PostAsJsonAsync($"{_apiBase}/posts/{postId}/likes", request);
             if (!response.IsSuccessStatusCode)
                 throw new HttpRequestException("API unavailable");
         }
@@ -139,7 +141,7 @@ public class SocialMediaApiService
             var response = await _httpClient.SendAsync(new HttpRequestMessage
             {
                 Method = HttpMethod.Delete,
-                RequestUri = new Uri($"{ApiBase}/posts/{postId}/likes"),
+                RequestUri = new Uri($"{_apiBase}/posts/{postId}/likes"),
                 Content = JsonContent.Create(request)
             });
             if (!response.IsSuccessStatusCode)
