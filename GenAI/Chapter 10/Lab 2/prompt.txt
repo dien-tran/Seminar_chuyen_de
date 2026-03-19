@@ -1,0 +1,10 @@
+CONTEXT: You are provided with:
+1. A Python function implementation enclosed with {{{ FUNCTION }}}
+2. Lines to be refactored enclosed with {{{ OLD }}}
+3. A library to be used in the new code enclosed with {{{ LIBRARY }}}
+TASK: Return a new implementation for the old lines using the specified
+library.
+FUNCTION: {{{ ... }}}
+OLD: {{{ ... }}}
+LIBRARY: {{{ ... }}}
+REFACTORED CODE:
