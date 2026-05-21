@@ -1,0 +1,10 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='500' viewBox='0 0 1200 500'>
+  <rect width='1200' height='500' fill='#f8fafc'/>
+  <rect x='30' y='30' width='1140' height='440' rx='16' fill='white' stroke='#cbd5e1' stroke-width='2'/>
+  <text x='60' y='85' font-family='Arial' font-size='34' fill='#0f172a'>Bai08 - Full Stack Microservice Delivery</text>
+  <rect x='90' y='140' width='300' height='120' rx='12' fill='#e0f2fe' stroke='#0284c7'/><text x='190' y='205' font-family='Arial' font-size='24' fill='#0c4a6e'>Frontend React</text>
+  <rect x='450' y='140' width='300' height='120' rx='12' fill='#dcfce7' stroke='#16a34a'/><text x='555' y='205' font-family='Arial' font-size='24' fill='#14532d'>Backend BE</text>
+  <rect x='810' y='140' width='300' height='120' rx='12' fill='#fee2e2' stroke='#dc2626'/><text x='920' y='205' font-family='Arial' font-size='24' fill='#7f1d1d'>Reports</text>
+  <rect x='220' y='300' width='300' height='120' rx='12' fill='#ffedd5' stroke='#ea580c'/><text x='315' y='365' font-family='Arial' font-size='24' fill='#7c2d12'>CI/CD</text>
+  <rect x='680' y='300' width='300' height='120' rx='12' fill='#ede9fe' stroke='#7c3aed'/><text x='765' y='365' font-family='Arial' font-size='24' fill='#4c1d95'>Kubernetes</text>
+</svg>

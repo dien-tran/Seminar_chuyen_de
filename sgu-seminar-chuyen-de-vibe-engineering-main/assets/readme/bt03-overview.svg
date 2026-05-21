@@ -1,0 +1,6 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='320' viewBox='0 0 1200 320'>
+  <rect width='1200' height='320' fill='#f8fafc'/>
+  <rect x='30' y='30' width='1140' height='260' rx='16' fill='white' stroke='#cbd5e1' stroke-width='2'/>
+  <text x='60' y='85' font-family='Arial' font-size='34' fill='#0f172a'>BT03 - Software Architecture Theory Document</text>
+  <rect x='220' y='130' width='760' height='120' rx='12' fill='#dbeafe' stroke='#2563eb'/><text x='450' y='200' font-family='Arial' font-size='26' fill='#1e3a8a'>Single DOCX File</text>
+</svg>

@@ -1,0 +1,11 @@
+<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='420' viewBox='0 0 1200 420'>
+  <rect width='1200' height='420' fill='#f8fafc'/>
+  <rect x='30' y='30' width='1140' height='360' rx='16' fill='white' stroke='#cbd5e1' stroke-width='2'/>
+  <text x='60' y='85' font-family='Arial' font-size='34' fill='#0f172a'>Bai04 - GenAI Basics with Nested Archive</text>
+  <rect x='90' y='130' width='280' height='80' rx='10' fill='#dcfce7' stroke='#16a34a'/><text x='160' y='178' font-family='Arial' font-size='24' fill='#14532d'>DOCX</text>
+  <rect x='410' y='130' width='280' height='80' rx='10' fill='#fee2e2' stroke='#dc2626'/><text x='490' y='178' font-family='Arial' font-size='24' fill='#7f1d1d'>PPTX</text>
+  <rect x='730' y='130' width='360' height='200' rx='12' fill='#e0f2fe' stroke='#0284c7'/>
+  <text x='820' y='175' font-family='Arial' font-size='24' fill='#0c4a6e'>genAI.zip</text>
+  <text x='780' y='215' font-family='Arial' font-size='20' fill='#0c4a6e'>Lab2 | Lab3 | Lab4 | Lab5</text>
+  <text x='840' y='245' font-family='Arial' font-size='20' fill='#0c4a6e'>py, ipynb, txt, env</text>
+</svg>
