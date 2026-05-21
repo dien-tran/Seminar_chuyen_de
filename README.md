@@ -2,8 +2,11 @@
 
 ## Thông tin thực hiện
 - Giảng viên hướng dẫn: TS. Đỗ Như Tài
-- Sinh viên thực hiện: Trịnh Long Phát
-- Mã sinh viên: 3122411150
+- Sinh viên thực hiện:
+    + Trịnh Long Phát - 3122411150
+    + Nguyễn Phương Vinh - 3122411247
+    + Ngô Tuấn Anh - 3122411007
+    + Trần Hảo Điền - 3122411042
 - Lớp: DCT122C3
 - Môn học: Seminar chuyên đề
 
