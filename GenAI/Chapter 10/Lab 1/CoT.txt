@@ -1,2 +1,0 @@
-CONTEXT: Cung cấp hàm cũ trong thẻ {{{ OLD }}}.
-TASK: Triển khai các hàm con dựa trên cấu trúc mới: parse_request_parameters, get_manhattan_dist, và get_euclidean_dist.

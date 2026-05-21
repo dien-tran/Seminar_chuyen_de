@@ -1,9 +1,0 @@
-CONTEXT: You will be provided with Python code enclosed with {{{ CODE }}} that may contain errors.
-TASK: Fix the errors in the code using the provided template.
-TEMPLATE: This code requires a fix because of { ERROR TYPE }. The fixed code is { CODE }.
-CODE:
-{{{
-def divide_numbers(a, b):
-return a / b
-print(divide_numbers(10, 0))
-}}}
